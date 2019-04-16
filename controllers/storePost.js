@@ -23,7 +23,7 @@ module.exports = (req, res) => {
 
             }, (error, post) => {
 
-                console.log(post);
+                // console.log(post);
                 res.redirect("/");
             });
 

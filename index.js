@@ -13,7 +13,7 @@ const edge = require("edge.js");
 const cloudinary = require("cloudinary");
 
 const createPostController = require("./controllers/createPost");
-const homePageController = require("./controllers/homePage");
+const dashboardController = require("./controllers/dash");
 const storePostController = require("./controllers/storePost");
 const getPostController = require("./controllers/getPost");
 const createUserController = require("./controllers/createUser");
@@ -63,7 +63,7 @@ const storePost = require("./middleware/storePost");
 const auth = require("./middleware/auth");
 const redirectIfAuthenticated = require('./middleware/redirectIfAuthenticated')
 
-app.get("/", homePageController);
+app.get("/dashboard", dashboardController);
 app.get("/post/:id", getPostController);
 app.get("/posts/new", auth, createPostController);
 app.get("/auth/logout", auth, logoutController);
@@ -73,7 +73,11 @@ app.post("/users/login", redirectIfAuthenticated, loginUserController);
 app.get("/auth/register", redirectIfAuthenticated, createUserController);
 app.post("/users/register", redirectIfAuthenticated, storeUserController);
 
-app.use((req, res) => res.render("not-found"));
+app.get("/", (req, res) => {
+    res.render("index");
+})
+
+app.use((req, res) => { res.render("not-found") });
 
 app.listen(process.env.PORT, () => {
     console.log("App listening on port ${process.env.PORT}");
